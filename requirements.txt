@@ -7,4 +7,4 @@ matplotlib
 datetime
 plotly
 fundamentus
-ssl
+
