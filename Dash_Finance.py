@@ -52,7 +52,7 @@ with col1:
     
 with col2: 
     st.metric(label=":green[IPCA]", value= f'{ipca_ultimo}%')
-    st.metric(label=":green[IGPM]", value= f'{igpm_ultimo}%')
+    st.metric(label=":green[IGPM]", value= f'{(igpm_ultimo):.2f}%')
 with col3:
     st.metric(label=":green[Dólar]", value= f'R$ {(dolar):.2f}')
     st.metric(label=":green[Euro]", value= f'R$ {(euro):.2f}')
