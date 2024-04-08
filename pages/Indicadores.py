@@ -34,7 +34,7 @@ with st.spinner('Baixando Informações...'):
             st.write('**Empresa:**', info_papel1['Empresa'][0])
             st.write('**Setor:**', info_papel1['Setor'][0])
             st.write('**Subsetor:**', info_papel1['Subsetor'][0])
-            st.write('**Cotação:**', f'R$ {float(info_papel1['Cotacao'][0]):,.2f}')
+            st.write('**Cotação:**', f'R$ {float(info_papel1["Cotacao"][0]):,.2f}')
 
             st.write('**:green[Performance]**')
             st.write('**Receita Líquida - 12 Meses:**', f'R$ {float(info_papel1["Receita_Liquida_12m"][0]):,.0f}')
