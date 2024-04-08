@@ -1,121 +1,100 @@
 import streamlit as st
 import pandas as pd
-import plotly
-import plotly.express as px
 import yfinance as yf
-import matplotlib 
-from matplotlib import style
-import matplotlib.pyplot as plt
+from datetime import date
 import plotly.graph_objects as go
-import numpy as np
-import numpy_financial as npf
-from bcb import sgs
+import fundamentus as fd
 
 st.page_link("Dash_Finance.py", label="Início", icon="🏠")
 
-st.title(':green[Valuation FIIs]')
+st.title(':green[Mercado]')
 
+
+st.markdown(date.today().strftime('%d/%m/%y'))
 st.markdown('---')
 
-with st.spinner('Carregando informações...'):
-    def busca_titulos_tesouro_direto():
-        url = 'https://www.tesourotransparente.gov.br/ckan/dataset/df56aa42-484a-4a59-8184-7676580c81e3/resource/796d2059-14e9-44e3-80c9-2d9e30b405c1/download/PrecoTaxaTesouroDireto.csv'
-        df  = pd.read_csv(url, sep=';', decimal=',')
-        df['Data Vencimento'] = pd.to_datetime(df['Data Vencimento'], dayfirst=True)
-        df['Data Base']       = pd.to_datetime(df['Data Base'], dayfirst=True)
-        multi_indice = pd.MultiIndex.from_frame(df.iloc[:, :3])
-        df = df.set_index(multi_indice).iloc[: , 3:]  
-        return df
+st.subheader('Índices de Mercado Mundiais')
 
-    titulos = busca_titulos_tesouro_direto()
-    titulos.sort_index(inplace=True)
+dict_tickers = {
+            'Bovespa' : '^BVSP',
+            'FTSE 100' : '^FTSE',
+            'Crude Oil' : 'CL=F',
+            'Gold' : 'GC=F',
+            'S&P500' : '^GSPC',
+            'DAX' : '^GDAXI',
+            'HANG SENG' : '^HSI',
+            'ETHEREUM' : 'ETH-USD',
+            'NASDAQ' : '^IXIC',
+            'NIKKEI' : '^N225',
+            'Volatility' : '^VIX',
+            'BITCOIN' : 'BTC-USD',
+            }
+df_info = pd.DataFrame({'Ativo' : dict_tickers.keys(), 'Ticker': dict_tickers.values()})
 
-    ipca2045 = titulos.loc[('Tesouro IPCA+', '2045-05-15')]
+df_info['Ult. Valor'] = ''
+df_info['%'] = ''
 
-    #Spread mais recente do IPCA 2045
-    ultimo_ipca2045 = ipca2045['Taxa Compra Manha'][-1]
-    #Taxa IPCA
-    df_ipca = sgs.get({'IPCA': 433})
-    ipca = df_ipca.iloc[-12:]
-    ipca_ultimo = sum(ipca['IPCA'])
+count = 0
+with st.spinner('Baixando cotações...'):
+    for ticker in dict_tickers.values():
+        cotacoes = yf.download(ticker, period ='5d')['Adj Close']
+        variacao = ((cotacoes.iloc[-1]/cotacoes.iloc[-2])-1)*100
+        df_info['Ult. Valor'][count] = round(cotacoes.iloc[-1], 2)
+        df_info['%'][count] = round(variacao, 2)
+        count += 1
 
+col1, col2, col3 = st.columns(3)
 
-    #Nome do Fundo
-    nome_fundo = st.text_input('Qual é o nome do fundo?')
-    tipo_fii = st.selectbox(
-        "Selecione o tipo do fundo a ser avaliado",
-        ("FII's Tijolo sem Crescimento", "FII's Tijolo com Crescimento", "FII's Papel"),
-        index=None,
-        placeholder="Tipo do Fundo Imobiliário",
-    )
+with col1:
+    st.metric(df_info['Ativo'][0], value=df_info['Ult. Valor'][0], delta=str(df_info['%'][0]) + '%')
+    st.metric(df_info['Ativo'][1], value=df_info['Ult. Valor'][1], delta=str(df_info['%'][1]) + '%')
+    st.metric(df_info['Ativo'][2], value=df_info['Ult. Valor'][2], delta=str(df_info['%'][2]) + '%')
+    st.metric(df_info['Ativo'][3], value=df_info['Ult. Valor'][4], delta=str(df_info['%'][3]) + '%')
 
-    st.markdown('---')
+with col2:
+    st.metric(df_info['Ativo'][4], value=df_info['Ult. Valor'][4], delta=str(df_info['%'][4]) + '%')
+    st.metric(df_info['Ativo'][5], value=df_info['Ult. Valor'][5], delta=str(df_info['%'][5]) + '%')
+    st.metric(df_info['Ativo'][6], value=df_info['Ult. Valor'][6], delta=str(df_info['%'][6]) + '%')
+    st.metric(df_info['Ativo'][7], value=df_info['Ult. Valor'][7], delta=str(df_info['%'][7]) + '%')
 
-    div_estimativa = st.checkbox('Colocar manualmente o provento do fundo')
-    st.caption(f'O modo automático utiliza o último provento pago pelo fundo, estimar manualmente pode fazer sentido se o último provento pago for um valor não recorrente. Cheque no gráfico de proventos abaixo se o valor é recorrente.')
-    papel_maiusculo = nome_fundo.upper()
-    ativo = f'{papel_maiusculo}.SA'
+with col3:
+    st.metric(df_info['Ativo'][8], value=df_info['Ult. Valor'][8], delta=str(df_info['%'][8]) + '%')
+    st.metric(df_info['Ativo'][9], value=df_info['Ult. Valor'][9], delta=str(df_info['%'][9]) + '%')
+    st.metric(df_info['Ativo'][10], value=df_info['Ult. Valor'][10], delta=str(df_info['%'][10]) + '%')
+    st.metric(df_info['Ativo'][11], value=df_info['Ult. Valor'][11], delta=str(df_info['%'][11]) + '%')
+st.markdown('---')
 
-    #Provento
-    if div_estimativa:
-        dividendos = st.number_input("Digite o valor do provento a ser utilizado como base:")
-        provento_anual = dividendos*12
-        papel_fii = yf.Ticker(ativo)
-        dados = papel_fii.history(period = '5y', interval = '1d')
-    else:
-        papel_fii = yf.Ticker(ativo)
-        dados = papel_fii.history(period = '5y', interval = '1d')
-        df_filtrado = dados[dados['Dividends'] > 0].iloc[12]
-        dividendos = df_filtrado.loc['Dividends']
-        provento_anual = dividendos*12
+st.subheader('Histórico do Mercado')
 
-    df_grafico = dados[dados['Dividends'] > 0].iloc[:12]
-    df_grafico_filtrado = df_grafico['Dividends']
+lista_indices = ['IBOV', 'S&P500', 'NASDAQ', 'BITCOIN']
+lista_periodo = ['5 anos', '1 ano', '1 dia']
 
-    fig = px.bar(x=df_grafico_filtrado.index, y = df_grafico_filtrado, title=f' Proventos pagos pelo {papel_maiusculo} nos últimos 12 meses', height=400)
-    st.plotly_chart(fig)
-    
-    #Prêmio de Risco
-    # O Prêmio de Risco é considerado geralmente de 1.5% a 3.5% de acordo com o risco do fundo.
-    premio_risco = st.number_input("Qual é o prêmio de risco do fundo imobiliário?", placeholder="prêmio de risco...")
-    premio_risco_float = float(premio_risco)
-    st.write('O Prêmio de Risco geralmente é considerado entre 1.5% a 3.5%, de acordo com o risco do fundo.')
+indice = st.selectbox('Selecione o Índice', lista_indices)
+periodo_var = st.selectbox('Selecione o período', lista_periodo)
+if periodo_var == '1 ano':
+    periodo_var = '1y'
+    intervalo = '1d'
+if periodo_var == '5 anos':
+    periodo_var = '5y'
+    intervalo = '1d'
+if periodo_var == '1 dia':
+    periodo_var = '1d'
+    intervalo = '5m'
 
-    st.markdown('---')
+if indice == 'IBOV':
+    indice_diario = yf.download('^BVSP', period = periodo_var, interval = intervalo)
+if indice == 'S&P500':
+    indice_diario = yf.download('^GSPC', period = periodo_var, interval = intervalo)
+if indice == 'NASDAQ':
+    indice_diario = yf.download('^IXIC', period = periodo_var, interval = intervalo)
+if indice == 'BITCOIN':
+    indice_diario = yf.download('BTC-USD', period = periodo_var, interval = intervalo)
 
-    #Taxa de Desconto
-    taxa_de_desconto = (premio_risco_float + ultimo_ipca2045)/100
+fig = go.Figure(data=[go.Candlestick(x=indice_diario.index,
+                    open=indice_diario['Open'],
+                    high=indice_diario['High'],
+                    low=indice_diario['Low'],
+                    close=indice_diario['Close'])])
+fig.update_layout(title=indice, xaxis_rangeslider_visible=False)
 
-
-    #Valor de Mercado
-    market_value = dados['Close'].iloc[-1]
-    
-
-    #Valor da Cota
-    if tipo_fii ==  "FII's Papel":
-        tx_desconto = (ultimo_ipca2045 + ipca_ultimo + premio_risco_float)
-        valor_cota = (provento_anual/tx_desconto)*100
-
-    elif tipo_fii ==  "FIIs Tijolo com Crescimento":
-        g = 1.05
-        valor_cota = npf.npv(taxa_de_desconto, [dividendos*g, dividendos*(g**2), dividendos*(g**3), dividendos*(g**4), dividendos*(g**5), (dividendos*(g**5)/taxa_de_desconto)]).round(2)
-
-    else:
-        valor_cota = provento_anual/taxa_de_desconto
-        var_dados = ((market_value/valor_cota) -1)*100
-    
-    var_dados = ((market_value/valor_cota) -1)*100
-    
-
-    st.write(f'O valor estimado da cota do :blue[{papel_maiusculo}] é: :green[R${(valor_cota):,.2f}]')
-    # crie deixar o resultado de var_dados aparecer em porcentagem
-    st.write(f'O valor de mercado do fundo :blue[{papel_maiusculo}] é: :green[R${market_value:,.2f}], ou seja, uma diferença de :violet[{(var_dados):.2f}%] em relação ao valor estimado.' )
-    
-
-    fig1 = go.Figure(data=[go.Candlestick(x=dados.index,
-                        open=dados['Open'],
-                        high=dados['High'],
-                        low=dados['Low'],
-                        close=dados['Close'])])
-    fig1.update_layout(title=f'Valor da cota do {papel_maiusculo} dos últimos 5 anos', xaxis_rangeslider_visible=False)
-    st.plotly_chart(fig1)
+st.plotly_chart(fig)
