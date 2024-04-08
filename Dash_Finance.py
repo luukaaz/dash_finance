@@ -12,8 +12,8 @@ from bcb import sgs
 
 
 #Taxa Selic
-df_selic = sgs.get({'DOLAR': 432})
-selic = df_selic['DOLAR'].iloc[-1]
+df_selic = sgs.get({'SELIC': 432})
+selic = df_selic['SELIC'].iloc[-1]
 
 #Taxa IPCA
 df_ipca = sgs.get({'IPCA': 433})
