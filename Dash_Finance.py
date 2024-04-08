@@ -31,7 +31,7 @@ euro = df_euro['EURO'].iloc[-1]
 #IGPM
 df_igpm = sgs.get({'IGPM': 189})
 igpm = df_igpm.iloc[-12:]
-igpm_ultimo = sum(igpm['IGPM']).round(2)
+igpm_ultimo = round(sum(igpm['IGPM']), 2)
 
 #Salário Mínimo
 df_salario = sgs.get({'Salário Mínimo': 21619})
