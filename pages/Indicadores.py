@@ -56,7 +56,7 @@ with st.spinner('Baixando Informações...'):
             st.write('**Disponibilidades:**', f'R$ {float(info_papel1["Disponibilidades"][0]):,.0f}')
             st.write('**Ativo Circulante:**', f'R$ {float(info_papel1["Ativo_Circulante"][0]):,.0f}')
             st.write('**Dívida Bruta:**', f'R$ {float(info_papel1["Div_Bruta"][0]):,.0f}')
-            st.write('**Dívida Bruta:**', f'R$ {float(info_papel1["Div_Liquida"][0]):,.0f}')
+            st.write('**Dívida Líquida:**', f'R$ {float(info_papel1["Div_Liquida"][0]):,.0f}')
             
     ativo1 = f'{papel1}.SA'
     ativo1_hist = yf.download(ativo1, period = '5y', interval = '1d')
