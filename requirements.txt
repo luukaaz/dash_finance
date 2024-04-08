@@ -7,6 +7,6 @@ matplotlib
 datetime
 plotly
 fundamentus
-from bcb import sgs
+bcb
 numpy
 numpy_financial
