@@ -31,7 +31,7 @@ euro = df_euro['EURO'].iloc[-1]
 #IGPM
 df_igpm = sgs.get({'IGPM': 189})
 igpm = df_igpm.iloc[-12:]
-igpm_ultimo = sum(igpm['IGPM'])
+igpm_ultimo = sum(igpm['IGPM']).round(2)
 
 #Salário Mínimo
 df_salario = sgs.get({'Salário Mínimo': 21619})
@@ -52,7 +52,7 @@ with col1:
     
 with col2: 
     st.metric(label=":green[IPCA]", value= f'{ipca_ultimo}%')
-    st.metric(label=":green[IGPM]", value= f'{(igpm_ultimo):.2f}%')
+    st.metric(label=":green[IGPM]", value= f'{igpm_ultimo}%')
 with col3:
     st.metric(label=":green[Dólar]", value= f'R$ {(dolar):.2f}')
     st.metric(label=":green[Euro]", value= f'R$ {(euro):.2f}')
