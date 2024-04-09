@@ -72,8 +72,9 @@ with st.spinner('Carregando informações...'):
     df_grafico = dados[dados['Dividends'] > 0].iloc[:12]
     df_grafico_filtrado = df_grafico['Dividends']
 
-    fig = px.bar(x=df_grafico_filtrado.index, y = df_grafico_filtrado, title=f' Proventos pagos pelo {papel_maiusculo} nos últimos 12 meses', height=400)
-    st.plotly_chart(fig)
+    if nome_fundo:
+        fig = px.bar(x=df_grafico_filtrado.index, y = df_grafico_filtrado, title=f' Proventos pagos pelo {papel_maiusculo} nos últimos 12 meses', height=400)
+        st.plotly_chart(fig)
     
     #Prêmio de Risco
     # O Prêmio de Risco é considerado geralmente de 1.5% a 3.5% de acordo com o risco do fundo.
