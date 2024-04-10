@@ -107,7 +107,7 @@ with st.spinner('Carregando informações...'):
 
         valor_cota = pd.to_numeric(valor_cota)
         
-        st.write(f'O valor estimado da cota do :blue[{papel_maiusculo}] é R${valor_cota:,.2f}')
+        st.text(f'O valor estimado da cota do :blue[{papel_maiusculo}] é R${valor_cota:,.2f}')
         # crie deixar o resultado de var_dados aparecer em porcentagem
         st.write(f'O valor de mercado do fundo :blue[{papel_maiusculo}] é R${market_value:,.2f}, ou seja, uma diferença de {(var_dados):.2f}% em relação ao valor estimado.' )
         
