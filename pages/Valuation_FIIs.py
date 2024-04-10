@@ -100,7 +100,7 @@ with st.spinner('Carregando informações...'):
             valor_cota = npf.npv(taxa_de_desconto, [dividendos*g, dividendos*(g**2), dividendos*(g**3), dividendos*(g**4), dividendos*(g**5), (dividendos*(g**5)/taxa_de_desconto)]).round(2)
         
         else:
-            valor_cota = float(provento_anual/taxa_de_desconto)
+            valor_cota = provento_anual/taxa_de_desconto
             var_dados = ((market_value/valor_cota) -1)*100
         
         var_dados = ((market_value/valor_cota) -1)*100
