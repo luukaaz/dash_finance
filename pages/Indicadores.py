@@ -40,7 +40,7 @@ with st.spinner('Baixando Informações...'):
             if 'Receita_Liquida_12m' in info_papel1.columns:
                 st.write('**Receita Líquida - 12 Meses:**', f'R${float(info_papel1['Receita_Liquida_12m'][0]):,.0f}')
             else:
-                st.write('**Receita Líquida - 12 Meses:**', f'R${float(info_papel1['Rec_Servicos_12m'][0]):,.0f}')
+                st.write('**Receita Líquida - 12 Meses:**', f'R${float(info_papel1["Rec_Servicos_12m"][0]):,.0f}')
             st.write('**Lucro Líquido - 12 Meses:**', f'R${float(info_papel1["Lucro_Liquido_12m"][0]):,.0f}')
             st.write('**ROE:**', f'{info_papel1["ROE"][0]}%')
             st.write('**ROIC:**', f'{info_papel1["ROIC"][0]}%')
@@ -98,9 +98,9 @@ if comparar:
                 st.write('**Cotação:**', f'R$ {float(info_papel2["Cotacao"][0]):,.2f}')
                 st.write('**:green[Performance]**')
                 if 'Receita_Liquida_12m' in info_papel2.columns:
-                    st.write('**Receita Líquida - 12 Meses:**', f'R${float(info_papel2['Receita_Liquida_12m'][0]):,.0f}')
+                    st.write('**Receita Líquida - 12 Meses:**', f'R${float(info_papel2["Receita_Liquida_12m"][0]):,.0f}')
                 else:
-                    st.write('**Receita Líquida - 12 Meses:**', f'R${float(info_papel2['Rec_Servicos_12m'][0]):,.0f}')
+                    st.write('**Receita Líquida - 12 Meses:**', f'R${float(info_papel2["Rec_Servicos_12m"][0]):,.0f}')
                 st.write('**Lucro Líquido - 12 Meses:**', f'R${float(info_papel1["Lucro_Liquido_12m"][0]):,.0f}')
                 st.write('**ROE:**', f'{info_papel2["ROE"][0]}%')
                 st.write('**ROIC:**', f'{info_papel2["ROIC"][0]}%')
