@@ -105,7 +105,7 @@ with st.spinner('Carregando informações...'):
         
         var_dados = ((market_value/valor_cota) -1)*100
 
-        valor_cota = pd.to_numeric(valor_cota)
+        valor_cota = valor_cota.iloc[-1]
         
         st.write(f'O valor estimado da cota do :blue[{papel_maiusculo}] é R${valor_cota}')
         # crie deixar o resultado de var_dados aparecer em porcentagem
