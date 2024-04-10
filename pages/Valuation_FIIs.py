@@ -70,7 +70,7 @@ with st.spinner('Carregando informações...'):
             dados = papel_fii.history(period = '5y', interval = '1d')
             df_filtrado = dados[dados['Dividends'] > 0]
             df_filtrado = df_filtrado.iloc[-12:]
-            dividendos = df_filtrado.loc['Dividends']
+            dividendos = df_filtrado['Dividends']
             provento_anual = dividendos*12
         
         df_grafico = dados[dados['Dividends'] > 0].iloc[-12:]
