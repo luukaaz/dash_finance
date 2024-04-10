@@ -34,14 +34,14 @@ with st.spinner('Baixando Informações...'):
             st.write('**Empresa:**', info_papel1['Empresa'][0])
             st.write('**Setor:**', info_papel1['Setor'][0])
             st.write('**Subsetor:**', info_papel1['Subsetor'][0])
-            st.write('**Cotação:**', f'R$ {float(info_papel1["Cotacao"][0]):,.2f}')
+            st.write('**Cotação:**', f'R${float(info_papel1["Cotacao"][0]):,.2f}')
 
             st.write('**:green[Performance]**')
             if 'Receita_Liquida_12m' in info_papel1.columns:
-                st.write('**Receita Líquida - 12 Meses:**', f'R$ {float(info_papel1['Receita_Liquida_12m'][0]):,.0f}')
+                st.write('**Receita Líquida - 12 Meses:**', f'R${float(info_papel1['Receita_Liquida_12m'][0]):,.0f}')
             else:
-                st.write('**Receita Líquida - 12 Meses:**', f'R$ {float(info_papel1['Rec_Servicos_12m'][0]):,.0f}')
-            st.write('**Lucro Líquido - 12 Meses:**', f'R$ {float(info_papel1["Lucro_Liquido_12m"][0]):,.0f}')
+                st.write('**Receita Líquida - 12 Meses:**', f'R${float(info_papel1['Rec_Servicos_12m'][0]):,.0f}')
+            st.write('**Lucro Líquido - 12 Meses:**', f'R${float(info_papel1["Lucro_Liquido_12m"][0]):,.0f}')
             st.write('**ROE:**', f'{info_papel1["ROE"][0]}%')
             st.write('**ROIC:**', f'{info_papel1["ROIC"][0]}%')
             st.write('**Liquidez Corrente**', f'{info_papel1["Liquidez_Corr"][0]}')
@@ -54,18 +54,18 @@ with st.spinner('Baixando Informações...'):
             st.write('**Dividend Yield:**', f'{info_papel1["Div_Yield"][0]}')
 
             st.write('**:green[Balanço Patrimonial]**')
-            st.write('**Patrimônio Líquido:**', f'R$ {float(info_papel1["Patrim_Liq"][0]):,.0f}')
+            st.write('**Patrimônio Líquido:**', f'R${float(info_papel1["Patrim_Liq"][0]):,.0f}')
             st.write('**Ativo:**', f'R$ {float(info_papel1["Ativo"][0]):,.0f}')
             if 'Disponibilidades' in info_papel1.columns:
-                st.write('**Disponibilidades**', f'R$ {float(info_papel1['Disponibilidades'][0]):,.0f}')
+                st.write('**Disponibilidades**', f'R${float(info_papel1['Disponibilidades'][0]):,.0f}')
             else:
-                st.write('**Depositos:**', f'R$ {float(info_papel1['Depositos'][0]):,.0f}')
+                st.write('**Depositos:**', f'R${float(info_papel1['Depositos'][0]):,.0f}')
             if 'Ativo_Circulante' in info_papel1.columns:
-                st.write('**Ativo Circulante:**', f'R$ {float(info_papel1["Ativo_Circulante"][0]):,.0f}')
+                st.write('**Ativo Circulante:**', f'R${float(info_papel1["Ativo_Circulante"][0]):,.0f}')
             else:
                 st.write('**Ativo Circulante:**', '')
             if 'Div_Bruta' in info_papel1.columns:
-                st.write('**Dívida Bruta:**', f'R$ {float(info_papel1["Div_Bruta"][0]):,.0f}')
+                st.write('**Dívida Bruta:**', f'R${float(info_papel1["Div_Bruta"][0]):,.0f}')
             else:
                 st.write('**Dívida Bruta:**', f'R$ {info_papel1["Div_Br_Patrim"][0]:}')
             if 'Div_Liquida' in info_papel1.columns:
@@ -98,10 +98,10 @@ if comparar:
                 st.write('**Cotação:**', f'R$ {float(info_papel2["Cotacao"][0]):,.2f}')
                 st.write('**:green[Performance]**')
                 if 'Receita_Liquida_12m' in info_papel2.columns:
-                    st.write('**Receita Líquida - 12 Meses:**', f'R$ {float(info_papel2['Receita_Liquida_12m'][0]):,.0f}')
+                    st.write('**Receita Líquida - 12 Meses:**', f'R${float(info_papel2['Receita_Liquida_12m'][0]):,.0f}')
                 else:
-                    st.write('**Receita Líquida - 12 Meses:**', f'R$ {float(info_papel2['Rec_Servicos_12m'][0]):,.0f}')
-                st.write('**Lucro Líquido - 12 Meses:**', f'R$ {float(info_papel1["Lucro_Liquido_12m"][0]):,.0f}')
+                    st.write('**Receita Líquida - 12 Meses:**', f'R${float(info_papel2['Rec_Servicos_12m'][0]):,.0f}')
+                st.write('**Lucro Líquido - 12 Meses:**', f'R${float(info_papel1["Lucro_Liquido_12m"][0]):,.0f}')
                 st.write('**ROE:**', f'{info_papel2["ROE"][0]}%')
                 st.write('**ROIC:**', f'{info_papel2["ROIC"][0]}%')
                 st.write('**Liquidez Corrente**', f'{info_papel2["Liquidez_Corr"][0]}')
