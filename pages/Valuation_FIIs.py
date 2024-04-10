@@ -69,11 +69,11 @@ with st.spinner('Carregando informações...'):
             papel_fii = yf.Ticker(ativo)
             dados = papel_fii.history(period = '5y', interval = '1d')
             df_filtrado = dados[dados['Dividends'] > 0]
-            df_filtrado = df_filtrado.iloc[-12]
+            df_filtrado = df_filtrado.iloc[-12:]
             dividendos = df_filtrado.loc['Dividends']
             provento_anual = dividendos*12
         
-        df_grafico = dados[dados['Dividends'] > 0].iloc[:12]
+        df_grafico = dados[dados['Dividends'] > 0].iloc[-12:]
         df_grafico_filtrado = df_grafico['Dividends']
         
         fig = px.bar(x=df_grafico_filtrado.index, y = df_grafico_filtrado, title=f' Proventos pagos pelo {papel_maiusculo} nos últimos 12 meses', height=400)
