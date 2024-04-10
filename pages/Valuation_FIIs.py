@@ -116,7 +116,7 @@ with st.spinner('Carregando informações...'):
         
         st.write(f'O valor estimado da cota do :blue[{papel_maiusculo}] é :green[R${valor_cota:,.2f}]')
         # crie deixar o resultado de var_dados aparecer em porcentagem
-        st.write(f'O valor de mercado do fundo :blue[{papel_maiusculo}] é R${market_value:,.2f}, ou seja, uma diferença de {(var_dados):.2f}% em relação ao valor estimado.' )
+        st.write(f'O valor de mercado do fundo :blue[{papel_maiusculo}] é :green[R${market_value:,.2f}], ou seja, uma diferença de :violet[{(var_dados):.2f}%] em relação ao valor estimado.' )
         
         
         fig1 = go.Figure(data=[go.Candlestick(x=dados.index,
