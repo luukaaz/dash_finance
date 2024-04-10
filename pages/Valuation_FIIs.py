@@ -106,9 +106,9 @@ with st.spinner('Carregando informações...'):
         var_dados = ((market_value/valor_cota) -1)*100
         
         
-        st.write(f'O valor estimado da cota do fundo analisado é: :green[R${(valor_cota):,.2f}]')
+        st.write('O valor estimado da cota do fundo analisado é:', valor_cota)
         # crie deixar o resultado de var_dados aparecer em porcentagem
-        st.write(f'O valor de mercado do fundo analisado é: :green[R${(market_value):,.2f}]')
+        st.write('O valor de mercado do fundo analisado é:', market_value))
         
         
         fig1 = go.Figure(data=[go.Candlestick(x=dados.index,
