@@ -1,3 +1,5 @@
+ipca_url = 'https://api.bcb.gov.br/dados/serie/bcdata.sgs.433/dados?formato=json'
+
 import streamlit as st
 import pandas as pd
 import plotly
@@ -9,7 +11,6 @@ import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 import numpy as np
 import numpy_financial as npf
-from bcb import sgs
 
 st.page_link("Dash_Finance.py", label="Início", icon="🏠")
 
@@ -35,9 +36,10 @@ with st.spinner('Carregando informações...'):
     #Spread mais recente do IPCA 2045
     ultimo_ipca2045 = ipca2045['Taxa Compra Manha'][-1]
     #Taxa IPCA
-    df_ipca = sgs.get({'IPCA': 433})
-    ipca = df_ipca.iloc[-12:]
-    ipca_ultimo = sum(ipca['IPCA'])
+    ipca_df = pd.read_json(ipca_url)
+    ipca_index = ipca_df.set_index('data')
+    ipca = ipca_index.iloc[-12:]
+    ipca_ultimo = sum(ipca['valor'])
 
 
     #Nome do Fundo
