@@ -57,9 +57,9 @@ with st.spinner('Baixando Informações...'):
             st.write('**Patrimônio Líquido:**', f'R${float(info_papel1["Patrim_Liq"][0]):,.0f}')
             st.write('**Ativo:**', f'R$ {float(info_papel1["Ativo"][0]):,.0f}')
             if 'Disponibilidades' in info_papel1.columns:
-                st.write('**Disponibilidades**', f'R${float(info_papel1['Disponibilidades'][0]):,.0f}')
+                st.write('**Disponibilidades**', f'R${float(info_papel1["Disponibilidades"][0]):,.0f}')
             else:
-                st.write('**Depositos:**', f'R${float(info_papel1['Depositos'][0]):,.0f}')
+                st.write('**Depositos:**', f'R${float(info_papel1["Depositos"][0]):,.0f}')
             if 'Ativo_Circulante' in info_papel1.columns:
                 st.write('**Ativo Circulante:**', f'R${float(info_papel1["Ativo_Circulante"][0]):,.0f}')
             else:
@@ -117,9 +117,9 @@ if comparar:
                 st.write('**Patrimônio Líquido:**', f'R$ {float(info_papel2["Patrim_Liq"][0]):,.0f}')
                 st.write('**Ativo:**', f'R$ {float(info_papel2["Ativo"][0]):,.0f}')
                 if 'Disponibilidades' in info_papel2.columns:
-                    st.write('**Disponibilidades**', f'R$ {float(info_papel2['Disponibilidades'][0]):,.0f}')
+                    st.write('**Disponibilidades**', f'R$ {float(info_papel2["Disponibilidades"][0]):,.0f}')
                 else:
-                    st.write('**Depositos:**', f'R$ {float(info_papel2['Depositos'][0]):,.0f}')
+                    st.write('**Depositos:**', f'R$ {float(info_papel2["Depositos"][0]):,.0f}')
                 if 'Ativo_Circulante' in info_papel2.columns:
                     st.write('**Ativo Circulante:**', f'R$ {float(info_papel2["Ativo_Circulante"][0]):,.0f}')
                 else:
