@@ -1,103 +1,100 @@
-selic_url = 'https://api.bcb.gov.br/dados/serie/bcdata.sgs.432/dados?formato=json'
-ipca_url = 'https://api.bcb.gov.br/dados/serie/bcdata.sgs.433/dados?formato=json'
-dolar_url = 'https://api.bcb.gov.br/dados/serie/bcdata.sgs.1/dados?formato=json'
-euro_url = 'https://api.bcb.gov.br/dados/serie/bcdata.sgs.21619/dados?formato=json'
-igpm_url = 'https://api.bcb.gov.br/dados/serie/bcdata.sgs.189/dados?formato=json'
-sal_url = 'https://api.bcb.gov.br/dados/serie/bcdata.sgs.1619/dados?formato=json'
-pib_url = 'https://api.bcb.gov.br/dados/serie/bcdata.sgs.7326/dados?formato=json'
-
 import streamlit as st
 import pandas as pd
 import yfinance as yf
-import investpy as inv
-import seaborn as sns
 from datetime import date
 import plotly.graph_objects as go
 import fundamentus as fd
-import numpy as np
-import plotly.express as px
-
 
 st.page_link("Dash_Finance.py", label="Início", icon="🏠")
 
-st.title(':green[Indicadores Econômicos]')
-
-with st.spinner('Baixando Informações...'):
-    #Taxa Selic
-    selic_df = pd.read_json(selic_url)
-    selic_index = selic_df.set_index('data')
-    selic_valor = selic_index['valor']
-    selic = selic_valor.iloc[-1]
-    
-    #Taxa IPCA
-    ipca_df = pd.read_json(ipca_url)
-    ipca_index = ipca_df.set_index('data')
-    ipca = ipca_index.iloc[-12:]
-    ipca_valor = ipca_index['valor']
-    ipca_ultimo = sum(ipca['valor'])
-
-    #Dólar
-    dolar_df = pd.read_json(dolar_url)
-    dolar_index = dolar_df.set_index('data')
-    dolar_valor = dolar_index['valor']
-    dolar = dolar_index.iloc[-1]
-    
-    #Euro
-    euro_df = pd.read_json(euro_url)
-    euro_index = euro_df.set_index('data')
-    euro_valor = euro_index['valor']
-    euro = euro_index.iloc[-1]
-    
-    #IGPM
-    igpm_df = pd.read_json(igpm_url)
-    igpm_index = igpm_df.set_index('data')
-    igpm_valor = igpm_index['valor']
-    igpm = igpm_index.iloc[-12:]
-    igpm_ultimo = sum(igpm['valor'])
-    
-    #PIB
-    pib_df = pd.read_json(pib_url)
-    pib_index = pib_df.set_index('data')
-    pib_valor = pib_index['valor']
-    pib = (pib_index.iloc[-1])
-    
-    
-    st.markdown('---')
-
-    col1, col2, col3 = st.columns(3)
-    with col1:
-        st.metric(label=":green[Taxa Selic]", value= f'{selic}%')
-        st.metric(label=":green[PIB]", value= f'{float(pib):.2f}%')
-    with col2: 
-        st.metric(label=":green[IPCA]", value= f'{ipca_ultimo}%')
-        st.metric(label=":green[IGPM]", value= f'{igpm_ultimo}%')
-    with col3:
-        st.metric(label=":green[Dólar]", value= f'R$ {float(dolar):.2f}')
-        st.metric(label=":green[Euro]", value= f'R$ {float(euro):.2f}')
+st.title(':green[Mercado]')
 
 
+st.markdown(date.today().strftime('%d/%m/%y'))
 st.markdown('---')
 
+st.subheader('Índices de Mercado Mundiais')
 
-indicador = st.selectbox(
-    "Selecione o indicador a ser analisado",
-    ("Selic", "IPCA", "Dólar", "IGPM"),
-    index=None,
-    placeholder="Indicador Econômico",
-)
+dict_tickers = {
+            'Bovespa' : '^BVSP',
+            'FTSE 100' : '^FTSE',
+            'Crude Oil' : 'CL=F',
+            'Gold' : 'GC=F',
+            'S&P500' : '^GSPC',
+            'DAX' : '^GDAXI',
+            'HANG SENG' : '^HSI',
+            'ETHEREUM' : 'ETH-USD',
+            'NASDAQ' : '^IXIC',
+            'NIKKEI' : '^N225',
+            'Volatility' : '^VIX',
+            'BITCOIN' : 'BTC-USD',
+            }
+df_info = pd.DataFrame({'Ativo' : dict_tickers.keys(), 'Ticker': dict_tickers.values()})
 
-if indicador == "Selic":
-    df = selic_valor
-if indicador == "IPCA":
-    df = ipca_valor.iloc[-240:]
-if indicador == "Dólar":
-    df = dolar_valor.iloc[-240:]
-if indicador == "IGPM":
-    df = igpm_valor.iloc[-240:]
+df_info['Ult. Valor'] = ''
+df_info['%'] = ''
 
+count = 0
+with st.spinner('Baixando cotações...'):
+    for ticker in dict_tickers.values():
+        cotacoes = yf.download(ticker, period ='5d')['Adj Close']
+        variacao = ((cotacoes.iloc[-1]/cotacoes.iloc[-2])-1)*100
+        df_info['Ult. Valor'][count] = round(cotacoes.iloc[-1], 2)
+        df_info['%'][count] = round(variacao, 2)
+        count += 1
 
+col1, col2, col3 = st.columns(3)
 
+with col1:
+    st.metric(df_info['Ativo'][0], value=df_info['Ult. Valor'][0], delta=str(df_info['%'][0]) + '%')
+    st.metric(df_info['Ativo'][1], value=df_info['Ult. Valor'][1], delta=str(df_info['%'][1]) + '%')
+    st.metric(df_info['Ativo'][2], value=df_info['Ult. Valor'][2], delta=str(df_info['%'][2]) + '%')
+    st.metric(df_info['Ativo'][3], value=df_info['Ult. Valor'][4], delta=str(df_info['%'][3]) + '%')
 
-if indicador: 
-    fig = px.line(x=df.index, y = df, title= 'HIstórico do Indicador Econômico', height=400)
-    st.plotly_chart(fig)
+with col2:
+    st.metric(df_info['Ativo'][4], value=df_info['Ult. Valor'][4], delta=str(df_info['%'][4]) + '%')
+    st.metric(df_info['Ativo'][5], value=df_info['Ult. Valor'][5], delta=str(df_info['%'][5]) + '%')
+    st.metric(df_info['Ativo'][6], value=df_info['Ult. Valor'][6], delta=str(df_info['%'][6]) + '%')
+    st.metric(df_info['Ativo'][7], value=df_info['Ult. Valor'][7], delta=str(df_info['%'][7]) + '%')
+
+with col3:
+    st.metric(df_info['Ativo'][8], value=df_info['Ult. Valor'][8], delta=str(df_info['%'][8]) + '%')
+    st.metric(df_info['Ativo'][9], value=df_info['Ult. Valor'][9], delta=str(df_info['%'][9]) + '%')
+    st.metric(df_info['Ativo'][10], value=df_info['Ult. Valor'][10], delta=str(df_info['%'][10]) + '%')
+    st.metric(df_info['Ativo'][11], value=df_info['Ult. Valor'][11], delta=str(df_info['%'][11]) + '%')
+st.markdown('---')
+
+st.subheader('Histórico do Mercado')
+
+lista_indices = ['IBOV', 'S&P500', 'NASDAQ', 'BITCOIN']
+lista_periodo = ['5 anos', '1 ano', '1 dia']
+
+indice = st.selectbox('Selecione o Índice', lista_indices)
+periodo_var = st.selectbox('Selecione o período', lista_periodo)
+if periodo_var == '1 ano':
+    periodo_var = '1y'
+    intervalo = '1d'
+if periodo_var == '5 anos':
+    periodo_var = '5y'
+    intervalo = '1d'
+if periodo_var == '1 dia':
+    periodo_var = '1d'
+    intervalo = '5m'
+
+if indice == 'IBOV':
+    indice_diario = yf.download('^BVSP', period = periodo_var, interval = intervalo)
+if indice == 'S&P500':
+    indice_diario = yf.download('^GSPC', period = periodo_var, interval = intervalo)
+if indice == 'NASDAQ':
+    indice_diario = yf.download('^IXIC', period = periodo_var, interval = intervalo)
+if indice == 'BITCOIN':
+    indice_diario = yf.download('BTC-USD', period = periodo_var, interval = intervalo)
+
+fig = go.Figure(data=[go.Candlestick(x=indice_diario.index,
+                    open=indice_diario['Open'],
+                    high=indice_diario['High'],
+                    low=indice_diario['Low'],
+                    close=indice_diario['Close'])])
+fig.update_layout(title=indice, xaxis_rangeslider_visible=False)
+
+st.plotly_chart(fig)
