@@ -70,7 +70,7 @@ with st.spinner('Baixando Informações...'):
         st.metric(label=":green[PIB]", value= f'{float(pib):.2f}%')
     with col2: 
         st.metric(label=":green[IPCA]", value= f'{ipca_ultimo}%')
-        st.metric(label=":green[IGPM]", value= f'{(igpm_ultimo)%:.2f}')
+        st.metric(label=":green[IGPM]", value= f'{(igpm_ultimo):.2f}%')
     with col3:
         st.metric(label=":green[Dólar]", value= f'R$ {float(dolar):.2f}')
         st.metric(label=":green[Euro]", value= f'R$ {float(euro):.2f}')
