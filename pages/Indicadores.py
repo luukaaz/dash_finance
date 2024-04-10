@@ -38,7 +38,7 @@ with st.spinner('Baixando Informações...'):
 
             st.write('**:green[Performance]**')
             if 'Receita_Liquida_12m' in info_papel1.columns:
-                st.write('**Receita Líquida - 12 Meses:**', f'R${float(info_papel1['Receita_Liquida_12m'][0]):,.0f}')
+                st.write('**Receita Líquida - 12 Meses:**', f'R${float(info_papel1["Receita_Liquida_12m"][0]):,.0f}')
             else:
                 st.write('**Receita Líquida - 12 Meses:**', f'R${float(info_papel1["Rec_Servicos_12m"][0]):,.0f}')
             st.write('**Lucro Líquido - 12 Meses:**', f'R${float(info_papel1["Lucro_Liquido_12m"][0]):,.0f}')
