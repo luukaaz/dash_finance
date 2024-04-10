@@ -100,13 +100,13 @@ with st.spinner('Carregando informações...'):
             valor_cota = npf.npv(taxa_de_desconto, [dividendos*g, dividendos*(g**2), dividendos*(g**3), dividendos*(g**4), dividendos*(g**5), (dividendos*(g**5)/taxa_de_desconto)]).round(2)
         
         else:
-            valor_cota = provento_anual/taxa_de_desconto
+            valor_cota = float(provento_anual/taxa_de_desconto)
             var_dados = ((market_value/valor_cota) -1)*100
         
         var_dados = ((market_value/valor_cota) -1)*100
         
         
-        st.write(f'O valor estimado da cota do :blue[{papel_maiusculo}] é :green[R${float(valor_cota):,.2f}]')
+        st.write(f'O valor estimado da cota do :blue[{papel_maiusculo}] é :green[R${valor_cota:,.2f}]')
         # crie deixar o resultado de var_dados aparecer em porcentagem
         st.write(f'O valor de mercado do fundo :blue[{papel_maiusculo}] é :green[R${market_value:,.2f}], ou seja, uma diferença de :violet[{(var_dados):.2f}%] em relação ao valor estimado.' )
         
