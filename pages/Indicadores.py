@@ -50,7 +50,7 @@ with st.spinner('Baixando Informações...'):
             st.write('**Valor de Mercado:**', f'R$ {float(info_papel1["Valor_de_mercado"][0]):,.0f}')
             st.write('**P/L:**', f' {float(info_papel1["PL"][0])/100:,.2f}')
             st.write('**P/VP:**', f' {float(info_papel1["PVP"][0])/100:,.2f}')
-            st.write('**EV/EBITDA:**', f' {info_papel1["EV_EBITDA"][0]}')
+            st.write('**EV/EBITDA:**', f' {float(info_papel1["EV_EBITDA"][0])/100:,.2f}')
             st.write('**Dividend Yield:**', f'{info_papel1["Div_Yield"][0]}')
 
             st.write('**:green[Balanço Patrimonial]**')
@@ -110,7 +110,7 @@ if comparar:
                 st.write('**Valor de Mercado:**', f'R$ {float(info_papel2["Valor_de_mercado"][0]):,.0f}')
                 st.write('**P/L:**', f' {float(info_papel2["PL"][0])/100:,.2f}')
                 st.write('**P/VP:**', f' {float(info_papel2["PVP"][0])/100:,.2f}')
-                st.write('**EV/EBITDA:**', f' {info_papel2["EV_EBITDA"][0]}')
+                st.write('**EV/EBITDA:**', f' {float(info_papel2["EV_EBITDA"][0])/100:,.2f}')
                 st.write('**Dividend Yield:**', f'{info_papel2["Div_Yield"][0]}')
 
                 st.write('**:green[Balanço Patrimonial]**')
