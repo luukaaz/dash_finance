@@ -44,7 +44,7 @@ with st.spinner('Baixando Informações...'):
             st.write('**Lucro Líquido - 12 Meses:**', f'R${float(info_papel1["Lucro_Liquido_12m"][0]):,.0f}')
             st.write('**ROE:**', f'{info_papel1["ROE"][0]}%')
             st.write('**ROIC:**', f'{info_papel1["ROIC"][0]}%')
-            st.write('**Liquidez Corrente**', f'{(info_papel1["Liquidez_Corr"][0])/100}')
+            st.write('**Liquidez Corrente**', f'{float(info_papel1["Liquidez_Corr"][0])/100:,.2f}')
             
             st.write('**:green[Valuation]**')
             st.write('**Valor de Mercado:**', f'R$ {float(info_papel1["Valor_de_mercado"][0]):,.0f}')
@@ -104,7 +104,7 @@ if comparar:
                 st.write('**Lucro Líquido - 12 Meses:**', f'R${float(info_papel1["Lucro_Liquido_12m"][0]):,.0f}')
                 st.write('**ROE:**', f'{info_papel2["ROE"][0]}%')
                 st.write('**ROIC:**', f'{info_papel2["ROIC"][0]}%')
-                st.write('**Liquidez Corrente**', f'{(info_papel2["Liquidez_Corr"][0])/100}')
+                st.write('**Liquidez Corrente**', f'{float(info_papel2["Liquidez_Corr"][0])/100:,.2f}')
                 
                 st.write('**:green[Valuation]**')
                 st.write('**Valor de Mercado:**', f'R$ {float(info_papel2["Valor_de_mercado"][0]):,.0f}')
