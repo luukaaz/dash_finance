@@ -7,7 +7,7 @@ st.markdown('---')
 
 st.page_link("pages/Economia.py", label="Ver Indicadores Econômicos", icon="💰")
 
-st.page_link("pages/Indicadores.py", label="Ver Indicadores de Ações", icon="📊")
+st.page_link("pages/Indicadores.py", label="Ver Indicadores de Empresas Brasileiras", icon="📊")
 
 st.page_link("pages/Mercado.py", label="Ir para Mercados Mundiais", icon="🌐")
 
