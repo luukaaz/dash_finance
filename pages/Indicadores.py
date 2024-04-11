@@ -13,7 +13,7 @@ from plotly.subplots import make_subplots
 
 st.page_link("Dash_Finance.py", label="Início", icon="🏠")
 
-st.title(':green[Indicadores]')
+st.title(':green[Indicadores de Empresas Brasileiras]')
 
 st.markdown(date.today().strftime('%d/%m/%y'))
 
