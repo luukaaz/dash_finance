@@ -73,15 +73,15 @@ with st.spinner('Carregando informações...'):
             dividendos = df_filtrado['Dividends']
             provento_anual = dividendos*12
 
-        papel_fii = yf.Ticker(ativo)
-        dados = papel_fii.history(period = '5y', interval = '1d')
-        dados = dados[dados['Dividends'] > 0]
-        dados_filtrados = dados.iloc[-12:]
-        df_filter = dados_filtrados['Dividends']
-        df_values = df_filter.values
-        
-        fig = px.bar(x=df_filter.index, y=df_values, template = 'plotly_dark', height = 400, width = 800)
-        st.plotly_chart(fig)
+            papel_fii = yf.Ticker(ativo)
+            dados = papel_fii.history(period = '5y', interval = '1d')
+            dados = dados[dados['Dividends'] > 0]
+            dados_filtrados = dados.iloc[-12:]
+            df_filter = dados_filtrados['Dividends']
+            df_values = df_filter.values
+            
+            fig = px.bar(x=df_filter.index, y=df_values, template = 'plotly_dark', height = 400, width = 800)
+            st.plotly_chart(fig)
         
         
         #Prêmio de Risco
