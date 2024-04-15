@@ -75,10 +75,11 @@ with st.spinner('Carregando informações...'):
 
         papel_fii = yf.Ticker(ativo)
         dados = papel_fii.history(period = '5y', interval = '1d')
-        dados_filtrados = dados[dados['Dividends'] > 0].iloc[-12:]
+        dados = dados[dados['Dividends'] > 0]
+        dados_filtrados = dados.iloc[-12:]
         df = dados_filtrados['Dividends']
         
-        fig = px.bar(x=df.index, y=df.values, template = 'plotly_dark', height = 400, width = 800)
+        fig = px.bar(x=df.index, y=df, template = 'plotly_dark', height = 400, width = 800)
         st.plotly_chart(fig)
         
         
