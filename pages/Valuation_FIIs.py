@@ -75,9 +75,9 @@ with st.spinner('Carregando informações...'):
 
         papel_fii = yf.Ticker(ativo)
         dados = papel_fii.history(period = '5y', interval = '1d')
-        df_filtrado = dados[dados['Dividends'] > 0].iloc[-12:]
+        df = dados[dados['Dividends'] > 0].iloc[-12:]
         
-        fig = px.bar(x=df_filtrado['Dividends'].index, y=df_filtrado['Dividends'].values, template = 'plotly_dark', height = 400, width = 800)
+        fig = px.bar(x=df['Dividends'].index, y=df['Dividends'].values, template = 'plotly_dark', height = 400, width = 800)
         st.plotly_chart(fig)
         
         #Prêmio de Risco
