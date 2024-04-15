@@ -113,7 +113,7 @@ with st.spinner('Carregando informações...'):
         
         var_dados = ((market_value/valor_cota) -1)*100
 
-
+        valor_cota = valor_cota.dropna
         valor_cota = valor_cota.iloc[-1]
         var_dados = var_dados.iloc[-1]
         
