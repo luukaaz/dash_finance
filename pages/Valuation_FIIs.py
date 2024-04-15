@@ -75,10 +75,12 @@ with st.spinner('Carregando informações...'):
 
         papel_fii = yf.Ticker(ativo)
         dados = papel_fii.history(period = '5y', interval = '1d')
-        df = dados[dados['Dividends'] > 0].iloc[-12:]
+        dados_filtrados = dados[dados['Dividends'] > 0].iloc[-12:]
+        df = dados_filtrados['Dividends']
         
-        fig = px.bar(x=df['Dividends'].index, y=df['Dividends'].values, template = 'plotly_dark', height = 400, width = 800)
+        fig = px.bar(x=df.index, y=df.values, template = 'plotly_dark', height = 400, width = 800)
         st.plotly_chart(fig)
+        
         
         #Prêmio de Risco
         # O Prêmio de Risco é considerado geralmente de 1.5% a 3.5% de acordo com o risco do fundo.
