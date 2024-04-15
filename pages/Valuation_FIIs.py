@@ -113,6 +113,7 @@ with st.spinner('Carregando informações...'):
         
         var_dados = ((market_value/valor_cota) -1)*100
 
+        st.write(ativo)
         st.write(valor_cota)
         df_filtrado = dados[dados['Dividends'] > 0]
         st.write(df_filtrado)
