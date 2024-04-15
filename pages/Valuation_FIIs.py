@@ -114,7 +114,7 @@ with st.spinner('Carregando informações...'):
         var_dados = ((market_value/valor_cota) -1)*100
 
         st.write(valor_cota)
-        df_filtrado = dados['Dividends']
+        df_filtrado = dados.loc[dados['Dividends'] > 0, 'Dividends']
         st.write(df_filtrado)
         df_filtrado = df_filtrado.iloc[-12:]
         st.write(df_filtrado)
