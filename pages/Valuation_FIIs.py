@@ -75,9 +75,9 @@ with st.spinner('Carregando informações...'):
 
             dados = dados[dados['Dividends'] > 0]
             dados_filtrados = dados.iloc[-12:]
-            df_values = dados_filtrados.loc[:,'Dividends']
+            dados_filtrados = dados_filtrados['Dividends']
             
-            fig = px.bar(x=df_values.index, y=df_values.values, template = 'plotly_dark', height = 400, width = 800)
+            fig = px.bar(x=dados_filtrados.index, y=dados_filtrados.values, template = 'plotly_dark', height = 400, width = 800)
             st.plotly_chart(fig)
         
         
