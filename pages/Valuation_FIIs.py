@@ -73,13 +73,14 @@ with st.spinner('Carregando informações...'):
             dividendos = df_filtrado['Dividends']
             provento_anual = dividendos*12
 
-            #dados_filtrados = dados[dados['Dividends'] > 0]
-            #dados_filtrados = dados.iloc[-12:]
-            #dados_filtrados = dados_filtrados['Dividends']
+            papel_fii = yf.Ticker(ativo)
+            dados = papel_fii.history(period = '5y', interval = '1d')
+            dados = dados[dados['Dividends'] > 0]
+            dados_filtrados = dados.iloc[-12:]
+            df = dados_filtrados['Dividends']
             
-            #fig = px.bar(x=dados_filtrados.index, y=dados_filtrados.values, template = 'plotly_dark', height = 400, width = 800)
-            #st.plotly_chart(fig)
-        
+            fig = px.bar(x=df.index, y=df.values, template = 'plotly_dark', height = 400, width = 800)
+            st.plotly_chart(fig)
         
         #Prêmio de Risco
         # O Prêmio de Risco é considerado geralmente de 1.5% a 3.5% de acordo com o risco do fundo.
@@ -94,7 +95,7 @@ with st.spinner('Carregando informações...'):
         
         
         #Valor de Mercado
-        market_value = dados.loc[:, 'Close'].iloc[-1]
+        market_value = dados['Close'].iloc[-1]
         
         
         #Valor da Cota
@@ -112,10 +113,12 @@ with st.spinner('Carregando informações...'):
         
         var_dados = ((market_value/valor_cota) -1)*100
 
+        valor_cota = valor_cota.iloc[-1]
+        var_dados = var_dados.iloc[-1]
         
         st.write(f'O valor estimado da cota do :blue[{papel_maiusculo}] é :green[R${valor_cota:,.2f}]')
         # crie deixar o resultado de var_dados aparecer em porcentagem
-        st.write(f'O valor de mercado do fundo :blue[{papel_maiusculo}] é :green[R${market_value:,.2f}], ou seja, uma diferença de :violet[{(var_dados):.2f}%] em relação ao valor estimado.' )
+        st.write(f'O valor de mercado do fundo :blue[{papel_maiusculo}] é R${market_value:,.2f}, ou seja, uma diferença de {(var_dados):.2f}% em relação ao valor estimado.' )
         
         
         fig1 = go.Figure(data=[go.Candlestick(x=dados.index,
