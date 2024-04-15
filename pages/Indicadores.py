@@ -52,7 +52,7 @@ with st.spinner('Baixando Informações...'):
             if 'EV_EBITDA' in info_papel1.columns:
                 st.write('**EV/EBITDA:**', f' {float(info_papel1["EV_EBITDA"][0])/100:,.2f}')
             else:
-                st.write('**Dívida Líquida:**', 'R$')
+                st.write('**EV/EBITDA:**', 'R$')
             st.write('**Dividend Yield:**', f'{info_papel1["Div_Yield"][0]}')
 
             st.write('**:green[Balanço Patrimonial]**')
