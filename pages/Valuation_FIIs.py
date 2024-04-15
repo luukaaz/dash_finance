@@ -79,7 +79,7 @@ with st.spinner('Carregando informações...'):
             dados_filtrados = dados.iloc[-12:]
             df = dados_filtrados['Dividends']
             
-            fig = px.bar(df, x='Date', y='Dividends', template = 'plotly_dark', height = 400, width = 800)
+            fig = px.bar(df, x='Dividends', y='Date', template = 'plotly_dark', height = 400, width = 800)
             st.plotly_chart(fig)
         
         #Prêmio de Risco
