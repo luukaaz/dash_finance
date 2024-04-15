@@ -54,7 +54,7 @@ with st.spinner('Carregando informações...'):
     st.markdown('---')
 
     div_estimativa = st.checkbox('Colocar manualmente o provento do fundo')
-    st.caption(f'O modo automático utiliza o último provento pago pelo fundo, estimar manualmente pode fazer sentido se o último provento pago for um valor não recorrente. Cheque no gráfico de proventos abaixo se o valor é recorrente.')
+    st.caption(f'O modo automático utiliza o último provento pago pelo fundo, estimar manualmente pode fazer sentido se o último provento pago for um valor não recorrente.')
     papel_maiusculo = nome_fundo.upper()
     ativo = f'{papel_maiusculo}.SA'
 
@@ -79,8 +79,8 @@ with st.spinner('Carregando informações...'):
             dados_filtrados = dados.iloc[-12:]
             df = dados_filtrados['Dividends']
             
-            fig = px.bar(x=df.index, y=df.values, template = 'plotly_dark', height = 400, width = 800)
-            st.plotly_chart(fig)
+            #fig = px.bar(x=df.index, y=df.values, template = 'plotly_dark', height = 400, width = 800)
+            #st.plotly_chart(fig)
         
         #Prêmio de Risco
         # O Prêmio de Risco é considerado geralmente de 1.5% a 3.5% de acordo com o risco do fundo.
