@@ -50,7 +50,7 @@ with st.spinner('Baixando Informações...'):
             st.write('**P/L:**', f' {float(info_papel1["PL"][0])/100:,.2f}')
             st.write('**P/VP:**', f' {float(info_papel1["PVP"][0])/100:,.2f}')
             if 'EV_EBITDA' in info_papel1.columns:
-                if info_papel1['EV_EBITDA'].dtype == 'object'
+                if info_papel1['EV_EBITDA'].dtype == 'object':
                     st.write('**EV/EBITDA:**', '')
                 else:
                     st.write('**EV/EBITDA:**', f' {float(info_papel1["EV_EBITDA"][0])/100:,.2f}')
