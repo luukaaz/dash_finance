@@ -114,6 +114,14 @@ with st.spinner('Carregando informações...'):
         var_dados = ((market_value/valor_cota) -1)*100
 
         st.write(valor_cota)
+        df_filtrado = dados['Dividends']
+        st.write(df_filtrado)
+        df_filtrado = df_filtrado.iloc[-12:]
+        st.write(df_filtrado)
+        dividendos = df_filtrado['Dividends']
+        st.write(dividendos)
+        provento_anual = dividendos*12
+        st.write(valor_cota)
         valor_cota = valor_cota.iloc[-1]
         var_dados = var_dados.iloc[-1]
         
