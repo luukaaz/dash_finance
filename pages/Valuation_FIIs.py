@@ -73,12 +73,12 @@ with st.spinner('Carregando informações...'):
             dividendos = df_filtrado['Dividends']
             provento_anual = dividendos*12
 
-            dados = dados[dados['Dividends'] > 0]
-            dados_filtrados = dados.iloc[-12:]
-            dados_filtrados = dados_filtrados['Dividends']
+            #dados_filtrados = dados[dados['Dividends'] > 0]
+            #dados_filtrados = dados.iloc[-12:]
+            #dados_filtrados = dados_filtrados['Dividends']
             
-            fig = px.bar(x=dados_filtrados.index, y=dados_filtrados.values, template = 'plotly_dark', height = 400, width = 800)
-            st.plotly_chart(fig)
+            #fig = px.bar(x=dados_filtrados.index, y=dados_filtrados.values, template = 'plotly_dark', height = 400, width = 800)
+            #st.plotly_chart(fig)
         
         
         #Prêmio de Risco
@@ -112,8 +112,8 @@ with st.spinner('Carregando informações...'):
         
         var_dados = ((market_value/valor_cota) -1)*100
 
-        valor_cota = valor_cota.iloc[-1].values
-        var_dados = var_dados.iloc[-1].values
+        valor_cota = valor_cota.iloc[-1]
+        var_dados = var_dados.iloc[-1]
         
         st.write(f'O valor estimado da cota do :blue[{papel_maiusculo}] é :green[R${valor_cota:,.2f}]')
         # crie deixar o resultado de var_dados aparecer em porcentagem
