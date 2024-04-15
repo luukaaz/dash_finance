@@ -97,7 +97,7 @@ with st.spinner('Carregando informações...'):
         
         
         #Valor de Mercado
-        market_value = dados['Close'].iloc[-1]
+        market_value = dados['Close'].iloc[-1].values
         
         
         #Valor da Cota
