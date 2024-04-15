@@ -112,7 +112,6 @@ with st.spinner('Carregando informações...'):
         
         var_dados = ((market_value/valor_cota) -1)*100
 
-        var_dados = var_dados.iloc[-1]
         
         st.write(f'O valor estimado da cota do :blue[{papel_maiusculo}] é :green[R${valor_cota:,.2f}]')
         # crie deixar o resultado de var_dados aparecer em porcentagem
