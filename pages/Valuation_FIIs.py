@@ -78,14 +78,9 @@ with st.spinner('Carregando informações...'):
             dados = dados[dados['Dividends'] > 0]
             dados_filtrados = dados.iloc[-12:]
             df = dados_filtrados['Dividends']
-
-            fig0 = go.Figure(data=[go.bar(x=df.index,
-                            y=df)])
-            fig0.update_layout(title=f'Dividendo da cota do {papel_maiusculo} dos últimos 5 anos', xaxis_rangeslider_visible=False)
-            st.plotly_chart(fig0)
         
-            #fig = px.bar(x=df.index, y=df, template = 'plotly_dark', height = 400, width = 800)
-            #st.plotly_chart(fig)
+            fig = px.bar(x=df.index, y=df.values, template = 'plotly_dark', height = 400, width = 800)
+            st.plotly_chart(fig)
         
         #Prêmio de Risco
         # O Prêmio de Risco é considerado geralmente de 1.5% a 3.5% de acordo com o risco do fundo.
