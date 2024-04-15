@@ -80,8 +80,8 @@ with st.spinner('Carregando informações...'):
             df_filter = dados_filtrados['Dividends']
             df_values = df_filter.values
             
-            fig = px.bar(x=df_filter.index, y=df_values, template = 'plotly_dark', height = 400, width = 800)
-            st.plotly_chart(fig)
+            #fig = px.bar(x=df_filter.index, y=df_values, template = 'plotly_dark', height = 400, width = 800)
+            #st.plotly_chart(fig)
         
         
         #Prêmio de Risco
