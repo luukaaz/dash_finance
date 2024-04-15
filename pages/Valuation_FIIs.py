@@ -78,7 +78,7 @@ with st.spinner('Carregando informações...'):
             dados = dados[dados['Dividends'] > 0]
             dados_filtrados = dados.iloc[-12:]
             df = dados_filtrados['Dividends']
-            df = px.df.gapminder()
+            df = px.df()
             
             fig = px.bar(df, x='Data', y='valores', template = 'plotly_dark', height = 400, width = 800)
             st.plotly_chart(fig)
