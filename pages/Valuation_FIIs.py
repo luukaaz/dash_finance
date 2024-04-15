@@ -74,9 +74,9 @@ with st.spinner('Carregando informações...'):
             provento_anual = dividendos*12
 
             papel_fii = yf.Ticker(ativo)
-            dados = papel_fii.history(period = '5y', interval = '1d')
-            dados = dados[dados['Dividends'] > 0]
-            dados_filtrados = dados.iloc[-12:]
+            dados_filtrados = papel_fii.history(period = '5y', interval = '1d')
+            dados_filtrados = dados_filtrados[dados_filtrados['Dividends'] > 0]
+            dados_filtrados = dados_filtrados.iloc[-12:]
             df = dados_filtrados['Dividends']
         
             #fig = px.bar(x=df.index, y=df.values, template = 'plotly_dark', height = 400, width = 800)
