@@ -66,7 +66,7 @@ with st.spinner('Carregando informações...'):
         dados_filtrados = dados_filtrados['Dividends']
         st.write(dados_filtrados)
         
-        fig = px.bar(x=df.index, y=df.values, template = 'plotly_dark', height = 400, width = 800)
+        fig = px.bar(x=dados_filtrados.index, y=dados_filtrados.values, template = 'plotly_dark', height = 400, width = 800)
         st.plotly_chart(fig)
 
         if nome_fundo:
