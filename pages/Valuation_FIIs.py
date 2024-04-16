@@ -66,7 +66,7 @@ with st.spinner('Carregando informações...'):
         dados_filtrados = dados_filtrados.iloc[-12:]
         dados_filtrados = dados_filtrados['Dividends']
         
-        fig = px.bar(x=dados_filtrados.index, y=dados_filtrados.values, template = 'plotly_dark', height = 400, width = 800)
+        fig = px.bar(x=dados_filtrados.index, y=dados_filtrados.values, template = 'plotly_dark', height = 400, width = 800, title = f'Evolução de Proventos do {papel_maiusculo}')
         st.plotly_chart(fig)
 
         if nome_fundo:
@@ -110,7 +110,7 @@ with st.spinner('Carregando informações...'):
         
         var_dados = ((market_value/valor_cota) -1)*100
     
-    
+        st.write(valor_cota)
         
         st.write(f'O valor estimado da cota do :blue[{papel_maiusculo}] é :green[R${valor_cota:,.2f}]')
         # crie deixar o resultado de var_dados aparecer em porcentagem
