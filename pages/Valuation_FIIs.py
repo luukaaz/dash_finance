@@ -61,8 +61,7 @@ with st.spinner('Carregando informações...'):
     dados_filtrados = dados[dados['Dividends'] > 0]
     dados_filtrados = dados_filtrados.iloc[-12:]
     dados_filtrados = dados_filtrados['Dividends']
-    dados_filtrados
-    st.write(dados)
+    st.write(dados_filtrados)
 
     
     #Provento
