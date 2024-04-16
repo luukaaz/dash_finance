@@ -56,13 +56,21 @@ with st.spinner('Carregando informações...'):
     papel_maiusculo = nome_fundo.upper()
     ativo = f'{papel_maiusculo}.SA'
 
-    #Provento
+    papel_fii = yf.Ticker(ativo)
+    dados = papel_fii.history(period = '5y', interval = '1d')
+    dados_filtrados = dados[dados['Dividends'] > 0]
+    dados_filtrados = dados_filtrados.iloc[-12:]
+    dados_filtrados = dados_filtrados['Dividends']
+    dados_filtrados
+    st.write(dados)
+
     
+    #Provento
     dividendos = st.number_input("Digite o valor do provento a ser utilizado como base:")
     provento_anual = dividendos*12
     papel_fii = yf.Ticker(ativo)
     dados = papel_fii.history(period = '5y', interval = '1d')
-        
+    
         
     #Prêmio de Risco
     # O Prêmio de Risco é considerado geralmente de 1.5% a 3.5% de acordo com o risco do fundo.
