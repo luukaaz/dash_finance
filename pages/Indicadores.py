@@ -114,10 +114,13 @@ if comparar:
                 st.write('**Valor de Mercado:**', f'R$ {float(info_papel2["Valor_de_mercado"][0]):,.0f}')
                 st.write('**P/L:**', f' {float(info_papel2["PL"][0])/100:,.2f}')
                 st.write('**P/VP:**', f' {float(info_papel2["PVP"][0])/100:,.2f}')
-                if 'EV_EBITDA' in info_papel2.columns:
-                    st.write('**EV/EBITDA:**', f' {float(info_papel2["EV_EBITDA"][0])/100:,.2f}')
+                if 'EV_EBITDA' in info_papel1.columns:
+                    if info_papel1['EV_EBITDA'].dtype == 'object':
+                        st.write('**EV/EBITDA:**', '')
+                    else:
+                        st.write('**EV/EBITDA:**', f' {float(info_papel1["EV_EBITDA"][0])/100:,.2f}')
                 else:
-                    st.write('**EV/EBITDA:**', 'R$')
+                    st.write('**EV/EBITDA:**', '')
                 st.write('**Dividend Yield:**', f'{info_papel2["Div_Yield"][0]}')
 
                 st.write('**:green[Balanço Patrimonial]**')
