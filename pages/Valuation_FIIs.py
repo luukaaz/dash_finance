@@ -108,7 +108,7 @@ with st.spinner('Carregando informações...'):
             valor_cota = provento_anual/taxa_de_desconto
             var_dados = ((market_value/valor_cota) -1)*100
         
-        var_dados = ((market_value/valor_cota) -1)*100
+        var_dados = float(((market_value/valor_cota) -1)*100)
     
         valor_cota = float(valor_cota.iloc[-1])
         
