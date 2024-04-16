@@ -41,7 +41,10 @@ with st.spinner('Carregando informações...'):
     ipca = ipca_index.iloc[-12:]
     ipca_ultimo = sum(ipca['valor'])
 
+    div_estimativa = st.checkbox('Colocar manualmente o provento do fundo')
+    st.caption(f'O modo automático utiliza o último provento pago pelo fundo, estimar manualmente pode fazer sentido se o último provento pago for um valor não recorrente. Cheque no gráfico de proventos abaixo se o valor é recorrente.')
 
+    
     #Nome do Fundo
     nome_fundo = st.text_input('Qual é o nome do fundo?')
     tipo_fii = st.selectbox(
@@ -50,69 +53,74 @@ with st.spinner('Carregando informações...'):
         index=None,
         placeholder="Tipo do Fundo Imobiliário",
     )
-
+    
     st.markdown('---')
-
-    papel_maiusculo = nome_fundo.upper()
-    ativo = f'{papel_maiusculo}.SA'
-
-    papel_fii = yf.Ticker(ativo)
-    dados = papel_fii.history(period = '5y', interval = '1d')
-    dados_filtrados = dados[dados['Dividends'] > 0]
-    dados_filtrados = dados_filtrados.iloc[-12:]
-    dados_filtrados = dados_filtrados['Dividends']
-    st.write(dados_filtrados)
-
-    
-    #Provento
-    dividendos = st.number_input("Digite o valor do provento a ser utilizado como base:")
-    provento_anual = dividendos*12
-    papel_fii = yf.Ticker(ativo)
-    dados = papel_fii.history(period = '5y', interval = '1d')
-    
+    if nome_fundo:
+        papel_maiusculo = nome_fundo.upper()
+        ativo = f'{papel_maiusculo}.SA'
         
-    #Prêmio de Risco
-    # O Prêmio de Risco é considerado geralmente de 1.5% a 3.5% de acordo com o risco do fundo.
-    premio_risco = st.number_input("Qual é o prêmio de risco do fundo imobiliário?", placeholder="prêmio de risco...")
-    premio_risco_float = float(premio_risco)
-    st.write('O Prêmio de Risco geralmente é considerado entre 1.5% a 3.5%, de acordo com o risco do fundo.')
-    
-    st.markdown('---')
-    
-    #Taxa de Desconto
-    taxa_de_desconto = (premio_risco_float + ultimo_ipca2045)/100
-    
-    
-    #Valor de Mercado
-    market_value = dados.loc[:, 'Close'].iloc[-1]
-    
-    
-    #Valor da Cota
-    if tipo_fii ==  "FII's Papel":
-        tx_desconto = (ultimo_ipca2045 + ipca_ultimo + premio_risco_float)
-        valor_cota = (provento_anual/tx_desconto)*100
-    
-    elif tipo_fii ==  "FIIs Tijolo com Crescimento":
-        g = 1.05
-        valor_cota = npf.npv(taxa_de_desconto, [dividendos*g, dividendos*(g**2), dividendos*(g**3), dividendos*(g**4), dividendos*(g**5), (dividendos*(g**5)/taxa_de_desconto)]).round(2)
-    
-    else:
-        valor_cota = provento_anual/taxa_de_desconto
+        papel_fii = yf.Ticker(ativo)
+        dados = papel_fii.history(period = '5y', interval = '1d')
+        dados_filtrados = dados[dados['Dividends'] > 0]
+        dados_filtrados = dados_filtrados.iloc[-12:]
+        dados_filtrados = dados_filtrados['Dividends']
+        st.write(dados_filtrados)
+        
+        fig = px.bar(x=df.index, y=df.values, template = 'plotly_dark', height = 400, width = 800)
+        st.plotly_chart(fig)
+
+        if nome_fundo:
+            if div_estimativa:
+                dividendos = st.number_input("Digite o valor do provento a ser utilizado como base:")
+                provento_anual = dividendos*12
+
+            else:
+                dividendos = dados_filtrados.tail(1)
+                provento_anual = dividendos*12
+                
+            
+        #Prêmio de Risco
+        # O Prêmio de Risco é considerado geralmente de 1.5% a 3.5% de acordo com o risco do fundo.
+        premio_risco = st.number_input("Qual é o prêmio de risco do fundo imobiliário?", placeholder="prêmio de risco...")
+        premio_risco_float = float(premio_risco)
+        st.write('O Prêmio de Risco geralmente é considerado entre 1.5% a 3.5%, de acordo com o risco do fundo.')
+        
+        st.markdown('---')
+        
+        #Taxa de Desconto
+        taxa_de_desconto = (premio_risco_float + ultimo_ipca2045)/100
+        
+        
+        #Valor de Mercado
+        market_value = dados.loc[:, 'Close'].iloc[-1]
+        
+        
+        #Valor da Cota
+        if tipo_fii ==  "FII's Papel":
+            tx_desconto = (ultimo_ipca2045 + ipca_ultimo + premio_risco_float)
+            valor_cota = (provento_anual/tx_desconto)*100
+        
+        elif tipo_fii ==  "FIIs Tijolo com Crescimento":
+            g = 1.05
+            valor_cota = npf.npv(taxa_de_desconto, [dividendos*g, dividendos*(g**2), dividendos*(g**3), dividendos*(g**4), dividendos*(g**5), (dividendos*(g**5)/taxa_de_desconto)]).round(2)
+        
+        else:
+            valor_cota = provento_anual/taxa_de_desconto
+            var_dados = ((market_value/valor_cota) -1)*100
+        
         var_dados = ((market_value/valor_cota) -1)*100
     
-    var_dados = ((market_value/valor_cota) -1)*100
-
-
     
-    st.write(f'O valor estimado da cota do :blue[{papel_maiusculo}] é :green[R${valor_cota:,.2f}]')
-    # crie deixar o resultado de var_dados aparecer em porcentagem
-    st.write(f'O valor de mercado do fundo :blue[{papel_maiusculo}] é R${market_value:,.2f}, ou seja, uma diferença de {(var_dados):.2f}% em relação ao valor estimado.' )
-    
-    
-    fig1 = go.Figure(data=[go.Candlestick(x=dados.index,
-                        open=dados['Open'],
-                        high=dados['High'],
-                        low=dados['Low'],
-                        close=dados['Close'])])
-    fig1.update_layout(title=f'Valor da cota do {papel_maiusculo} dos últimos 5 anos', xaxis_rangeslider_visible=False)
-    st.plotly_chart(fig1)
+        
+        st.write(f'O valor estimado da cota do :blue[{papel_maiusculo}] é :green[R${valor_cota:,.2f}]')
+        # crie deixar o resultado de var_dados aparecer em porcentagem
+        st.write(f'O valor de mercado do fundo :blue[{papel_maiusculo}] é R${market_value:,.2f}, ou seja, uma diferença de {(var_dados):.2f}% em relação ao valor estimado.' )
+        
+        
+        fig1 = go.Figure(data=[go.Candlestick(x=dados.index,
+                            open=dados['Open'],
+                            high=dados['High'],
+                            low=dados['Low'],
+                            close=dados['Close'])])
+        fig1.update_layout(title=f'Valor da cota do {papel_maiusculo} dos últimos 5 anos', xaxis_rangeslider_visible=False)
+        st.plotly_chart(fig1)
