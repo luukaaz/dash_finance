@@ -41,9 +41,6 @@ with st.spinner('Carregando informações...'):
     ipca = ipca_index.iloc[-12:]
     ipca_ultimo = sum(ipca['valor'])
 
-    div_estimativa = st.checkbox('Colocar manualmente o provento do fundo')
-    st.caption(f'O modo automático utiliza o último provento pago pelo fundo, estimar manualmente pode fazer sentido se o último provento pago for um valor não recorrente. Cheque no gráfico de proventos abaixo se o valor é recorrente.')
-
     
     #Nome do Fundo
     nome_fundo = st.text_input('Qual é o nome do fundo?')
@@ -58,13 +55,16 @@ with st.spinner('Carregando informações...'):
     if nome_fundo:
         papel_maiusculo = nome_fundo.upper()
         ativo = f'{papel_maiusculo}.SA'
+
+        div_estimativa = st.checkbox('Colocar manualmente o provento do fundo')
+        st.caption(f'O modo automático utiliza o último provento pago pelo fundo, estimar manualmente pode fazer sentido se o último provento pago for um valor não recorrente. Cheque no gráfico de proventos abaixo se o valor é recorrente.')
+
         
         papel_fii = yf.Ticker(ativo)
         dados = papel_fii.history(period = '5y', interval = '1d')
         dados_filtrados = dados[dados['Dividends'] > 0]
         dados_filtrados = dados_filtrados.iloc[-12:]
         dados_filtrados = dados_filtrados['Dividends']
-        st.write(dados_filtrados)
         
         fig = px.bar(x=dados_filtrados.index, y=dados_filtrados.values, template = 'plotly_dark', height = 400, width = 800)
         st.plotly_chart(fig)
