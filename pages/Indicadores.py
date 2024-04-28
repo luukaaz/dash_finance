@@ -229,7 +229,7 @@ if comparar:
     ativo2 = yf.Ticker(ativo2_sa)
     balance2 = ativo2.get_incomestmt(freq= frequencia)
     balanco2 = pd.DataFrame(balance)
-    balanco2 = balanco[balanco.columns[::-1]]
+    balanco2 = balanco2[balanco2.columns[::-1]]
 
     #balanço patrimonial
     balanco_pat2 = ativo.get_balance_sheet(freq= frequencia)
@@ -238,7 +238,7 @@ if comparar:
     balanco_pat2 = balanco_pat2[balanco_pat.columns[::-1]]
 
     #Receita Bruta
-    revenue2 = balanco.loc['TotalRevenue']
+    revenue2 = balanco2.loc['TotalRevenue']
 
     #EBITDA ou Dívida Líquida
     if 'EBITDA' in balanco2.columns:
@@ -249,7 +249,7 @@ if comparar:
         ebitda_title2 = 'Dívida Líquida'
 
     # Lucro 
-    net2 = balanco.loc['NetIncome']
+    net2 = balanco2.loc['NetIncome']
 
     #Margem Líquida
     margem2 = net2/revenue2
