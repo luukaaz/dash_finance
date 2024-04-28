@@ -228,7 +228,7 @@ if comparar:
     ativo2_sa = f'{papel2}.SA'
     ativo2 = yf.Ticker(ativo2_sa)
     balance2 = ativo2.get_incomestmt(freq= frequencia)
-    balanco2 = pd.DataFrame(balance)
+    balanco2 = pd.DataFrame(balance2)
     balanco2 = balanco2[balanco2.columns[::-1]]
 
     #balanço patrimonial
