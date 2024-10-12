@@ -137,50 +137,50 @@ if selecao_manual:
 
 
 else:
-papel_maiusculo = nome_fundo.upper()
-ativo = f'{papel_maiusculo}.SA'
-
-dividendos = st.number_input("Digite o valor do provento a ser utilizado como base:")
-provento_anual = dividendos*12
-
-# Prêmio de Risco
-# O Prêmio de Risco é considerado geralmente de 1.5% a 3.5% de acordo com o risco do fundo.
-premio_risco = st.number_input("Qual é o prêmio de risco do fundo imobiliário?", placeholder="prêmio de risco...")
-premio_risco_float = float(premio_risco)
-st.write('O Prêmio de Risco geralmente é considerado entre 1.5% a 3.5%, de acordo com o risco do fundo.')
-
-st.markdown('---')    
-
-#Valor de Mercado
-papel_fii = yf.Ticker(ativo)
-dados = papel_fii.history(period = '5y', interval = '1d')
-market_value = dados.loc[:, 'Close'].iloc[-1]
-
-ultimo_ipca2045 = st.number_input("Informe o valor da taxa do título do tesouro IPCA+45:")
-
-#Taxa de Desconto
-taxa_de_desconto = (premio_risco_float + ultimo_ipca2045)/100
-
-#Valor da Cota
-if tipo_fii ==  "FII's Papel":
-    ipca_ultimo = st.number_input("Informe o valor do IPCA acumulado dos últimos 12 meses:")
-    tx_desconto = (ultimo_ipca2045 + ipca_ultimo + premio_risco_float)
-    valor_cota = (provento_anual/tx_desconto)*100
-
-elif tipo_fii ==  "FIIs Tijolo com Crescimento":
-    g = 1.05
-    valor_cota = npf.npv(taxa_de_desconto, [dividendos*g, dividendos*(g**2), dividendos*(g**3), dividendos*(g**4), dividendos*(g**5), (dividendos*(g**5)/taxa_de_desconto)]).round(2)
-
-else:
-    valor_cota = provento_anual/taxa_de_desconto
-    var_dados = ((market_value/valor_cota) -1)*100
-
-var_dados = float(((market_value/valor_cota) -1)*100)
-
-valor_cota = float(valor_cota)
-
-st.write(f'O valor estimado da cota do :blue[{papel_maiusculo}] é :green[R${valor_cota:,.2f}]')
-# crie deixar o resultado de var_dados aparecer em porcentagem
-st.write(f'O valor de mercado do fundo :blue[{papel_maiusculo}] é :green[R${market_value:,.2f}], ou seja, uma diferença de :violet[{(var_dados):.2f}%] em relação ao valor estimado.' )
-
-
+    papel_maiusculo = nome_fundo.upper()
+    ativo = f'{papel_maiusculo}.SA'
+    
+    dividendos = st.number_input("Digite o valor do provento a ser utilizado como base:")
+    provento_anual = dividendos*12
+    
+    # Prêmio de Risco
+    # O Prêmio de Risco é considerado geralmente de 1.5% a 3.5% de acordo com o risco do fundo.
+    premio_risco = st.number_input("Qual é o prêmio de risco do fundo imobiliário?", placeholder="prêmio de risco...")
+    premio_risco_float = float(premio_risco)
+    st.write('O Prêmio de Risco geralmente é considerado entre 1.5% a 3.5%, de acordo com o risco do fundo.')
+    
+    st.markdown('---')    
+    
+    #Valor de Mercado
+    papel_fii = yf.Ticker(ativo)
+    dados = papel_fii.history(period = '5y', interval = '1d')
+    market_value = dados.loc[:, 'Close'].iloc[-1]
+    
+    ultimo_ipca2045 = st.number_input("Informe o valor da taxa do título do tesouro IPCA+45:")
+    
+    #Taxa de Desconto
+    taxa_de_desconto = (premio_risco_float + ultimo_ipca2045)/100
+    
+    #Valor da Cota
+    if tipo_fii ==  "FII's Papel":
+        ipca_ultimo = st.number_input("Informe o valor do IPCA acumulado dos últimos 12 meses:")
+        tx_desconto = (ultimo_ipca2045 + ipca_ultimo + premio_risco_float)
+        valor_cota = (provento_anual/tx_desconto)*100
+    
+    elif tipo_fii ==  "FIIs Tijolo com Crescimento":
+        g = 1.05
+        valor_cota = npf.npv(taxa_de_desconto, [dividendos*g, dividendos*(g**2), dividendos*(g**3), dividendos*(g**4), dividendos*(g**5), (dividendos*(g**5)/taxa_de_desconto)]).round(2)
+    
+    else:
+        valor_cota = provento_anual/taxa_de_desconto
+        var_dados = ((market_value/valor_cota) -1)*100
+    
+    var_dados = float(((market_value/valor_cota) -1)*100)
+    
+    valor_cota = float(valor_cota)
+    
+    st.write(f'O valor estimado da cota do :blue[{papel_maiusculo}] é :green[R${valor_cota:,.2f}]')
+    # crie deixar o resultado de var_dados aparecer em porcentagem
+    st.write(f'O valor de mercado do fundo :blue[{papel_maiusculo}] é :green[R${market_value:,.2f}], ou seja, uma diferença de :violet[{(var_dados):.2f}%] em relação ao valor estimado.' )
+    
+    
